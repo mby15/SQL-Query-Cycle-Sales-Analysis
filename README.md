@@ -12,12 +12,12 @@ Este proyecto realiza un análisis del ciclo de ventas de una empresa de artícu
 Los archivos CSV utilizados en este proyecto provienen del repositorio público:  
 🔗 [SQL-Query-Bee-Cycle-Sales-Analysis (GitHub)](https://github.com/aldimeolaalfarisy/SQL-Query-Bee-Cycle-Sales-Analysis)
 
-Archivo customers_csv.csv contiene 1360 registros.
-Archivo dim_geography.csv contiene 654 registros.
-Archivo dim_product.csv contiene 397 registros.
-Archivo dim_territory.csv contiene 11 registros.
-Archivo fact_sales.csv contiene 5954 registros.
-
+Archivo customers_csv.csv contiene 1360 registros. <br>
+Archivo dim_geography.csv contiene 654 registros.<br>
+Archivo dim_product.csv contiene 397 registros.<br>
+Archivo dim_territory.csv contiene 11 registros.<br>
+Archivo fact_sales.csv contiene 5954 registros.<br>
+<br>
 
 ---
 
