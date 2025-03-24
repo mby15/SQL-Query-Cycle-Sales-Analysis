@@ -69,7 +69,7 @@ Se modelaron los datos como un **esquema en estrella**, con una tabla de hechos 
 
 📌 Vista del modelo EER (generado en MySQL Workbench):
 
-![Modelo Estrella - EER](star_schema_sales_cycle.png)
+![Modelo Estrella - EER](modelo entidad-relación/star_schema_sales_cycle.png)
 
 ---
 
