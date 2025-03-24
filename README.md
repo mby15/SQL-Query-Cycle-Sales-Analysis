@@ -54,11 +54,11 @@ Se creó un segundo script SQL (`transform_analysis.sql`) que:
 - Genera vistas y tablas nuevas para análisis en euros
 - Relaciona las tablas mediante **claves foráneas**
 - Ejecuta consultas para análisis como:
---> Ventas mensuales (por año y mes) NO SE PUEDEN SACAR CONCLUSIONES CLARAS PORQUE SOLO HAY UN AÑO ENTERO
---> Conocer el total de ventas en cada región
---> Top 10 productos con mayores ventas totales
---> Top categrias con mayores ventas totales
-
+--> Ventas mensuales (por año y mes) NO SE PUEDEN SACAR CONCLUSIONES CLARAS PORQUE SOLO HAY UN AÑO ENTERO<br>
+--> Conocer el total de ventas en cada región<br>
+--> Top 10 productos con mayores ventas totales<br>
+--> Top categrias con mayores ventas totales<br>
+<br>
 ## 🧩 Modelo de Datos (Esquema Estrella)
 
 Se modelaron los datos como un **esquema en estrella**, con una tabla de hechos `fact_sales_euros_table` conectada a dimensiones:
