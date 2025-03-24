@@ -6,7 +6,6 @@
     <AccessibleZoneTabOrder />
     <AnimationOnByDefault />
     <AutoCreateAndUpdateDSDPhoneLayouts />
-    <DashboardGridOverlay />
     <IntuitiveSorting />
     <IntuitiveSorting_SP2 />
     <MapboxVectorStylesAndLayers />
@@ -974,6 +973,7 @@
       <aliases enabled='yes' />
       <column datatype='string' name='[:Measure Names]' role='dimension' type='nominal'>
         <aliases>
+          <alias key='&quot;[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:Calculation_165788821584420869:qk]&quot;' value='Resultado Neto' />
           <alias key='&quot;[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalcost_euros:qk]&quot;' value='Coste' />
           <alias key='&quot;[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]&quot;' value='Ingresos' />
           <alias key='&quot;[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821586558983:qk]&quot;' value='Margen de beneficio' />
@@ -1068,6 +1068,16 @@
       <group caption='Acción (Country)' hidden='true' name='[Action (Country)]' name-style='unqualified' user:auto-column='sheet_link'>
         <groupfilter function='crossjoin'>
           <groupfilter function='level-members' level='[country]' />
+        </groupfilter>
+      </group>
+      <group caption='Acción (Gender)' hidden='true' name='[Action (Gender)]' name-style='unqualified' user:auto-column='sheet_link'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[gender]' />
+        </groupfilter>
+      </group>
+      <group caption='Acción (AÑO(Order Date))' hidden='true' name='[Action (YEAR(Order Date))]' name-style='unqualified' user:auto-column='sheet_link'>
+        <groupfilter function='crossjoin'>
+          <groupfilter function='level-members' level='[yr:order_date:ok]' />
         </groupfilter>
       </group>
       <extract _.fcp.VConnDownstreamExtractsWithWarnings.true...user-specific='false' count='-1' enabled='true' object-id='' units='records'>
@@ -1934,16 +1944,16 @@
             </map>
           </encoding>
           <encoding attr='color' field='[none:category:nk]' type='palette'>
-            <map to='#4e79a7'>
+            <map to='#32779b'>
+              <bucket>&quot;Clothing&quot;</bucket>
+            </map>
+            <map to='#76b7b2'>
               <bucket>&quot;Bikes&quot;</bucket>
             </map>
             <map to='#76b7b2'>
               <bucket>&quot;Components&quot;</bucket>
             </map>
-            <map to='#e15759'>
-              <bucket>&quot;Clothing&quot;</bucket>
-            </map>
-            <map to='#f28e2b'>
+            <map to='#edc948'>
               <bucket>&quot;Accessories&quot;</bucket>
             </map>
           </encoding>
@@ -2168,7 +2178,7 @@
   <actions>
     <action caption='Filtro 1 (generado)' name='[Action1_980F803FB1654A1EA91107380CAA60D6]'>
       <activation auto-clear='true' type='on-select' />
-      <source dashboard='Dashboard 1' type='sheet' worksheet='Hoja 10' />
+      <source dashboard='Dashboard 1' type='sheet' worksheet='Barra Categorias' />
       <command command='tsc:tsl-filter'>
         <param name='special-fields' value='all' />
         <param name='target' value='Dashboard 1' />
@@ -2176,7 +2186,7 @@
     </action>
     <action caption='Filtro 2 (generado)' name='[Action2_BD603715F8DA46AF9DB7C2433416F724]'>
       <activation auto-clear='true' type='on-select' />
-      <source dashboard='Dashboard 1' type='sheet' worksheet='Paises glovo (2)' />
+      <source dashboard='Dashboard 1' type='sheet' worksheet='Paises rectang.' />
       <command command='tsc:tsl-filter'>
         <param name='special-fields' value='all' />
         <param name='target' value='Dashboard 1' />
@@ -2184,7 +2194,7 @@
     </action>
     <action caption='Filtro 3 (generado)' name='[Action3_02F8834F9C5C4A478AABF6B62D23B2B5]'>
       <activation auto-clear='true' type='on-select' />
-      <source dashboard='Dashboard 1' type='sheet' worksheet='Anual' />
+      <source dashboard='Dashboard 1' type='sheet' worksheet='Anual barra' />
       <command command='tsc:tsl-filter'>
         <param name='special-fields' value='all' />
         <param name='target' value='Dashboard 1' />
@@ -2249,6 +2259,12 @@
           <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]'>
             <groupfilter function='level-members' level='[country]' user:ui-action-filter='[Action2_BD603715F8DA46AF9DB7C2433416F724]' user:ui-enumeration='all' user:ui-marker='enumerate' />
           </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]'>
+            <groupfilter function='level-members' level='[gender]' user:ui-action-filter='[Action4_A952E5FE6CAD452DA1BE764F0F5C1AA6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]'>
+            <groupfilter function='member' level='[yr:order_date:ok]' member='2016' user:ui-action-filter='[Action3_02F8834F9C5C4A478AABF6B62D23B2B5]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <manual-sort column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' direction='ASC'>
             <dictionary>
               <bucket>&quot;Bikes&quot;</bucket>
@@ -2264,13 +2280,31 @@
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[:Measure Names]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]</column>
           </slices>
           <aggregation value='true' />
         </view>
         <style>
           <style-rule element='cell'>
+            <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[:Measure Names]' value='47' />
+            <format attr='width' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' value='96' />
             <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821586558983:qk]' value='p0.00%' />
-            <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[:Measure Names]' value='53' />
+            <format attr='color' value='#000000' />
+          </style-rule>
+          <style-rule element='header'>
+            <format attr='band-color' scope='rows' value='#e9f3f2' />
+            <format attr='background-color' value='#ffffff' />
+            <format attr='width' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[:Measure Names]' value='88' />
+          </style-rule>
+          <style-rule element='pane'>
+            <format attr='band-color' scope='rows' value='#e9f3f2' />
+            <format attr='background-color' data-class='subtotal' value='#00000000' />
+            <format attr='band-color' scope='cols' value='#00000000' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='band-size' scope='rows' value='1' />
+            <format attr='band-size' scope='cols' value='1' />
           </style-rule>
         </style>
         <panes>
@@ -2289,6 +2323,8 @@
               <style-rule element='pane'>
                 <format attr='minheight' value='-1' />
                 <format attr='maxheight' value='-1' />
+                <format attr='minwidth' value='-1' />
+                <format attr='maxwidth' value='-1' />
               </style-rule>
             </style>
           </pane>
@@ -2298,7 +2334,14 @@
       </table>
       <simple-id uuid='{5FAC39E8-F1D3-4F3E-AE4E-F61BF7B5FE47}' />
     </worksheet>
-    <worksheet name='Anual'>
+    <worksheet name='Anual barra'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Ingresos Anuales</run>
+          </formatted-text>
+        </title>
+      </layout-options>
       <table>
         <view>
           <datasources>
@@ -2316,11 +2359,11 @@
             <column aggregation='CountD' caption='Totalprice Euros' datatype='real' datatype-customized='true' name='[totalprice_euros]' role='measure' type='quantitative' />
             <column-instance column='[order_date]' derivation='Year' name='[yr:order_date:ok]' pivot='key' type='ordinal' />
           </datasource-dependencies>
-          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]'>
-            <groupfilter function='level-members' level='[category]' user:ui-action-filter='[Action1_980F803FB1654A1EA91107380CAA60D6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
-          </filter>
           <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]'>
             <groupfilter function='level-members' level='[country]' user:ui-action-filter='[Action2_BD603715F8DA46AF9DB7C2433416F724]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]'>
+            <groupfilter function='level-members' level='[gender]' user:ui-action-filter='[Action4_A952E5FE6CAD452DA1BE764F0F5C1AA6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
           </filter>
           <filter class='quantitative' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' included-values='in-range' />
           <slices>
@@ -2329,8 +2372,8 @@
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]</column>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]</column>
           </slices>
           <aggregation value='true' />
         </view>
@@ -2340,6 +2383,17 @@
           </style-rule>
           <style-rule element='cell'>
             <format attr='width' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]' value='70' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='background-color' value='#00000000' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='title' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]' value='Año'>
+              <formatted-text>
+                <run>Año</run>
+              </formatted-text>
+            </format>
+            <format attr='background-color' value='#e6e6e62f' />
           </style-rule>
         </style>
         <panes>
@@ -2377,7 +2431,7 @@
       </table>
       <simple-id uuid='{2301AFEC-9FBC-4A94-96E7-5CAF08764F3E}' />
     </worksheet>
-    <worksheet name='Anual (2)'>
+    <worksheet name='Anual tabla'>
       <table>
         <view>
           <datasources>
@@ -2441,6 +2495,129 @@
         </subtotals>
       </table>
       <simple-id uuid='{A51309A0-4E3A-40B8-BBEF-7AC7848DDA5B}' />
+    </worksheet>
+    <worksheet name='Barra Categorias'>
+      <layout-options>
+        <title>
+          <formatted-text>
+            <run>Categories</run>
+          </formatted-text>
+        </title>
+      </layout-options>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='customers_csv+' name='federated.1klt0wa1edcpt11fvxl5x1ntbdqw' />
+          </datasources>
+          <datasource-dependencies datasource='federated.1klt0wa1edcpt11fvxl5x1ntbdqw'>
+            <column caption='Porcentaje sobre total' datatype='real' name='[Calculation_165788821497364484]' role='measure' type='quantitative'>
+              <calculation class='tableau' formula='SUM([totalprice_euros]) / TOTAL(SUM([totalprice_euros]))'>
+                <table-calc ordering-type='Rows' />
+              </calculation>
+            </column>
+            <column caption='Category' datatype='string' name='[category]' role='dimension' type='nominal' />
+            <column caption='Country' datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
+            <column caption='Gender' datatype='string' name='[gender]' role='dimension' type='nominal' />
+            <column-instance column='[category]' derivation='None' name='[none:category:nk]' pivot='key' type='nominal' />
+            <column-instance column='[country]' derivation='None' name='[none:country:nk]' pivot='key' type='nominal' />
+            <column-instance column='[gender]' derivation='None' name='[none:gender:nk]' pivot='key' type='nominal' />
+            <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
+            <column-instance column='[totalprice_euros]' derivation='Sum' name='[sum:totalprice_euros:qk]' pivot='key' type='quantitative' />
+            <column aggregation='CountD' caption='Totalprice Euros' datatype='real' datatype-customized='true' name='[totalprice_euros]' role='measure' type='quantitative' />
+            <column-instance column='[Calculation_165788821497364484]' derivation='User' name='[usr:Calculation_165788821497364484:qk]' pivot='key' type='quantitative'>
+              <table-calc ordering-type='Columns' />
+            </column-instance>
+            <column-instance column='[order_date]' derivation='Year' name='[yr:order_date:ok]' pivot='key' type='ordinal' />
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]'>
+            <groupfilter function='level-members' level='[country]' user:ui-action-filter='[Action2_BD603715F8DA46AF9DB7C2433416F724]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]'>
+            <groupfilter function='level-members' level='[gender]' user:ui-action-filter='[Action4_A952E5FE6CAD452DA1BE764F0F5C1AA6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]'>
+            <groupfilter function='member' level='[yr:order_date:ok]' member='2016' user:ui-action-filter='[Action3_02F8834F9C5C4A478AABF6B62D23B2B5]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='quantitative' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' included-values='non-null' />
+          <shelf-sorts>
+            <shelf-sort-v2 dimension-to-sort='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' direction='DESC' is-on-innermost-dimension='true' measure-to-sort-by='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' shelf='rows' />
+          </shelf-sorts>
+          <slices>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style>
+          <style-rule element='axis'>
+            <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' value='49' />
+            <format attr='display' class='0' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' scope='cols' value='false' />
+          </style-rule>
+          <style-rule element='cell'>
+            <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' value='53' />
+            <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='p0.00%' />
+            <format attr='text-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='right' />
+            <format attr='vertical-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='top' />
+            <format attr='text-orientation' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='-90' />
+            <format attr='wrap' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='on' />
+            <format attr='text-orientation' data-class='total' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='0' />
+            <format attr='wrap' data-class='total' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='on' />
+            <format attr='vertical-align' data-class='total' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='center' />
+            <format attr='font-size' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' value='8' />
+          </style-rule>
+          <style-rule element='header'>
+            <format attr='width' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' value='96' />
+            <format attr='background-color' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='#333333' />
+          </style-rule>
+          <style-rule element='label'>
+            <format attr='text-orientation' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='-90' />
+          </style-rule>
+          <style-rule element='mark'>
+            <encoding attr='size-bar' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' field-type='quantitative' max-size='1' min-size='0.005' type='centersize' />
+          </style-rule>
+          <style-rule element='worksheet'>
+            <format attr='display-field-labels' scope='rows' value='false' />
+          </style-rule>
+        </style>
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <mark-sizing mark-sizing-setting='marks-scaling-off' />
+            <encodings>
+              <text column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' />
+              <text column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='mark-labels-show' value='true' />
+                <format attr='mark-labels-cull' value='false' />
+                <format attr='size' value='0.80160218477249146' />
+                <format attr='mark-color' value='#94dfd2' />
+                <format attr='has-stroke' value='false' />
+              </style-rule>
+              <style-rule element='pane'>
+                <format attr='minwidth' value='353' />
+                <format attr='maxwidth' value='353' />
+                <format attr='minheight' value='-1' />
+                <format attr='maxheight' value='-1' />
+                <format attr='aspect' value='0' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]</rows>
+        <cols>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]</cols>
+      </table>
+      <simple-id uuid='{A5C9118C-D01C-4A92-852E-DB45BCA37D0D}' />
     </worksheet>
     <worksheet name='Categorias'>
       <table>
@@ -2510,109 +2687,7 @@
       </table>
       <simple-id uuid='{2F4040DC-EDAE-42BA-9AD5-ED9F1E920508}' />
     </worksheet>
-    <worksheet name='Hoja 10'>
-      <table>
-        <view>
-          <datasources>
-            <datasource caption='customers_csv+' name='federated.1klt0wa1edcpt11fvxl5x1ntbdqw' />
-          </datasources>
-          <datasource-dependencies datasource='federated.1klt0wa1edcpt11fvxl5x1ntbdqw'>
-            <column caption='Porcentaje sobre total' datatype='real' name='[Calculation_165788821497364484]' role='measure' type='quantitative'>
-              <calculation class='tableau' formula='SUM([totalprice_euros]) / TOTAL(SUM([totalprice_euros]))'>
-                <table-calc ordering-type='Rows' />
-              </calculation>
-            </column>
-            <column caption='Category' datatype='string' name='[category]' role='dimension' type='nominal' />
-            <column caption='Country' datatype='string' name='[country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
-            <column caption='Gender' datatype='string' name='[gender]' role='dimension' type='nominal' />
-            <column-instance column='[category]' derivation='None' name='[none:category:nk]' pivot='key' type='nominal' />
-            <column-instance column='[country]' derivation='None' name='[none:country:nk]' pivot='key' type='nominal' />
-            <column-instance column='[gender]' derivation='None' name='[none:gender:nk]' pivot='key' type='nominal' />
-            <column caption='Order Date' datatype='date' name='[order_date]' role='dimension' type='ordinal' />
-            <column-instance column='[totalprice_euros]' derivation='Sum' name='[sum:totalprice_euros:qk]' pivot='key' type='quantitative' />
-            <column aggregation='CountD' caption='Totalprice Euros' datatype='real' datatype-customized='true' name='[totalprice_euros]' role='measure' type='quantitative' />
-            <column-instance column='[Calculation_165788821497364484]' derivation='User' name='[usr:Calculation_165788821497364484:qk]' pivot='key' type='quantitative'>
-              <table-calc ordering-type='Columns' />
-            </column-instance>
-            <column-instance column='[order_date]' derivation='Year' name='[yr:order_date:ok]' pivot='key' type='ordinal' />
-          </datasource-dependencies>
-          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]'>
-            <groupfilter function='level-members' level='[country]' user:ui-action-filter='[Action2_BD603715F8DA46AF9DB7C2433416F724]' user:ui-enumeration='all' user:ui-marker='enumerate' />
-          </filter>
-          <filter class='quantitative' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' included-values='non-null' />
-          <shelf-sorts>
-            <shelf-sort-v2 dimension-to-sort='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' direction='DESC' is-on-innermost-dimension='true' measure-to-sort-by='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' shelf='rows' />
-          </shelf-sorts>
-          <slices>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]</column>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]</column>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]</column>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]</column>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]</column>
-            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]</column>
-          </slices>
-          <aggregation value='true' />
-        </view>
-        <style>
-          <style-rule element='axis'>
-            <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' value='49' />
-            <format attr='display' class='0' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' scope='cols' value='false' />
-          </style-rule>
-          <style-rule element='cell'>
-            <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='p0.00%' />
-            <format attr='text-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='right' />
-            <format attr='vertical-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='top' />
-            <format attr='text-orientation' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='-90' />
-            <format attr='wrap' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='on' />
-            <format attr='text-orientation' data-class='total' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='0' />
-            <format attr='wrap' data-class='total' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='on' />
-            <format attr='vertical-align' data-class='total' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='center' />
-            <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' value='53' />
-          </style-rule>
-          <style-rule element='header'>
-            <format attr='background-color' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='#333333' />
-            <format attr='width' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' value='96' />
-          </style-rule>
-          <style-rule element='label'>
-            <format attr='text-orientation' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' value='-90' />
-          </style-rule>
-          <style-rule element='mark'>
-            <encoding attr='size-bar' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' field-type='quantitative' max-size='1' min-size='0.005' type='centersize' />
-          </style-rule>
-        </style>
-        <panes>
-          <pane selection-relaxation-option='selection-relaxation-allow'>
-            <view>
-              <breakdown value='auto' />
-            </view>
-            <mark class='Automatic' />
-            <mark-sizing mark-sizing-setting='marks-scaling-off' />
-            <encodings>
-              <text column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' />
-              <text column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk]' />
-            </encodings>
-            <style>
-              <style-rule element='mark'>
-                <format attr='mark-labels-show' value='true' />
-                <format attr='mark-labels-cull' value='false' />
-                <format attr='size' value='0.80160218477249146' />
-              </style-rule>
-              <style-rule element='pane'>
-                <format attr='minwidth' value='353' />
-                <format attr='maxwidth' value='353' />
-                <format attr='minheight' value='-1' />
-                <format attr='maxheight' value='-1' />
-                <format attr='aspect' value='0' />
-              </style-rule>
-            </style>
-          </pane>
-        </panes>
-        <rows>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]</rows>
-        <cols>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]</cols>
-      </table>
-      <simple-id uuid='{A5C9118C-D01C-4A92-852E-DB45BCA37D0D}' />
-    </worksheet>
-    <worksheet name='Paises glovo'>
+    <worksheet name='Paises circular'>
       <table>
         <view>
           <datasources>
@@ -2744,7 +2819,7 @@
       </table>
       <simple-id uuid='{22EAA777-C6DF-4BEC-B287-A30EA499DD24}' />
     </worksheet>
-    <worksheet name='Paises glovo (2)'>
+    <worksheet name='Paises rectang.'>
       <table>
         <view>
           <datasources>
@@ -2773,6 +2848,12 @@
           <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]'>
             <groupfilter function='level-members' level='[category]' user:ui-action-filter='[Action1_980F803FB1654A1EA91107380CAA60D6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
           </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]'>
+            <groupfilter function='level-members' level='[gender]' user:ui-action-filter='[Action4_A952E5FE6CAD452DA1BE764F0F5C1AA6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]'>
+            <groupfilter function='member' level='[yr:order_date:ok]' member='2016' user:ui-action-filter='[Action3_02F8834F9C5C4A478AABF6B62D23B2B5]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <filter class='quantitative' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' included-values='non-null' />
           <slices>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]</column>
@@ -2781,16 +2862,21 @@
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]</column>
           </slices>
           <aggregation value='true' />
         </view>
         <style>
           <style-rule element='cell'>
-            <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk:1]' value='p0.00%' />
             <format attr='width' value='632' />
+            <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[usr:Calculation_165788821497364484:qk:1]' value='p0.00%' />
           </style-rule>
           <style-rule element='map'>
             <format attr='washout' value='0.0' />
+          </style-rule>
+          <style-rule element='quick-filter'>
+            <format attr='background-color' value='#e6e6e634' />
           </style-rule>
         </style>
         <panes>
@@ -2925,6 +3011,12 @@
           <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]'>
             <groupfilter function='level-members' level='[country]' user:ui-action-filter='[Action2_BD603715F8DA46AF9DB7C2433416F724]' user:ui-enumeration='all' user:ui-marker='enumerate' />
           </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]'>
+            <groupfilter function='level-members' level='[gender]' user:ui-action-filter='[Action4_A952E5FE6CAD452DA1BE764F0F5C1AA6]' user:ui-enumeration='all' user:ui-marker='enumerate' />
+          </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]'>
+            <groupfilter function='member' level='[yr:order_date:ok]' member='2016' user:ui-action-filter='[Action3_02F8834F9C5C4A478AABF6B62D23B2B5]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <computed-sort column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' direction='DESC' using='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' />
           <slices>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]</column>
@@ -2933,18 +3025,24 @@
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Gender)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]</column>
           </slices>
           <aggregation value='true' />
         </view>
         <style>
           <style-rule element='axis'>
             <format attr='height' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[mn:order_date:ok]' value='77' />
+            <format attr='title' class='0' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' scope='rows' value='Importe' />
           </style-rule>
           <style-rule element='cell'>
             <format attr='width' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[mn:order_date:ok]' value='22' />
           </style-rule>
           <style-rule element='label'>
             <format attr='text-orientation' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[mn:order_date:ok]' value='-90' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='background-color' value='#00000000' />
           </style-rule>
         </style>
         <panes>
@@ -3154,6 +3252,9 @@
           <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]'>
             <groupfilter function='level-members' level='[country]' user:ui-action-filter='[Action2_BD603715F8DA46AF9DB7C2433416F724]' user:ui-enumeration='all' user:ui-marker='enumerate' />
           </filter>
+          <filter class='categorical' column='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]'>
+            <groupfilter function='member' level='[yr:order_date:ok]' member='2016' user:ui-action-filter='[Action3_02F8834F9C5C4A478AABF6B62D23B2B5]' user:ui-domain='database' user:ui-enumeration='inclusive' user:ui-marker='enumerate' />
+          </filter>
           <slices>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]</column>
@@ -3161,17 +3262,26 @@
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Category)]</column>
             <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (Country)]</column>
+            <column>[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[Action (YEAR(Order Date))]</column>
           </slices>
           <aggregation value='true' />
         </view>
         <style>
           <style-rule element='cell'>
-            <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[pcto:sum:totalprice_euros:qk:1]' value='p0.00%' />
             <format attr='height' value='203' />
             <format attr='width' value='209' />
+            <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[pcto:sum:totalprice_euros:qk:1]' value='p0.00%' />
+            <format attr='text-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[pcto:sum:totalprice_euros:qk:1]' value='center' />
+            <format attr='vertical-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[pcto:sum:totalprice_euros:qk:1]' value='center' />
+            <format attr='text-orientation' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[pcto:sum:totalprice_euros:qk:1]' value='0' />
+            <format attr='text-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' value='center' />
+            <format attr='vertical-align' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' value='center' />
           </style-rule>
           <style-rule element='label'>
             <format attr='text-format' field='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[pcto:sum:totalprice_euros:qk:1]' value='p0.00%' />
+          </style-rule>
+          <style-rule element='table'>
+            <format attr='background-color' value='#00000000' />
           </style-rule>
         </style>
         <panes>
@@ -3272,6 +3382,9 @@
   <dashboards>
     <dashboard enable-sort-zone-taborder='true' name='Dashboard 1'>
       <style>
+        <style-rule element='table'>
+          <format attr='background-color' value='#ffffff' />
+        </style-rule>
         <style-rule element='dash-text'>
           <format attr='text-align' id='dash-text_28' value='center' />
         </style-rule>
@@ -3293,9 +3406,18 @@
       <zones>
         <zone h='100000' id='4' type-v2='layout-basic' w='100000' x='0' y='0'>
           <zone h='97894' id='7' param='horz' type-v2='layout-flow' w='98858' x='571' y='1053'>
-            <zone h='97894' id='5' type-v2='layout-basic' w='87429' x='571' y='1053' />
+            <zone h='97894' id='5' type-v2='layout-basic' w='87429' x='571' y='1053'>
+              <zone h='97894' id='35' is-scaled='1' param='P:/MASTER/Z.Portfolio/Cycle/white_background_4 v2.jpg' type-v2='bitmap' w='87429' x='571' y='1053'>
+                <zone-style>
+                  <format attr='border-color' value='#000000' />
+                  <format attr='border-style' value='none' />
+                  <format attr='border-width' value='0' />
+                  <format attr='margin' value='4' />
+                </zone-style>
+              </zone>
+            </zone>
             <zone fixed-size='160' h='97894' id='6' is-fixed='true' param='vert' type-v2='layout-flow' w='11429' x='88000' y='1053'>
-              <zone h='19869' id='8' mode='checklist' name='Anual' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]' type-v2='filter' w='11429' x='88000' y='1053'>
+              <zone fixed-size='90' h='12895' id='8' is-fixed='true' mode='checkdropdown' name='Anual barra' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]' type-v2='filter' w='11429' x='88000' y='1053'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -3303,7 +3425,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone h='19869' id='10' mode='typeinlist' name='Anual' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' type-v2='filter' w='11429' x='88000' y='20922'>
+              <zone h='19869' id='10' mode='typeinlist' name='Anual barra' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' type-v2='filter' w='11429' x='88000' y='13948'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -3311,7 +3433,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone h='13816' id='12' name='Anual' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='filter' w='11429' x='88000' y='40791'>
+              <zone h='13816' id='12' name='Anual barra' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='filter' w='11429' x='88000' y='33817'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -3319,7 +3441,7 @@
                   <format attr='margin' value='4' />
                 </zone-style>
               </zone>
-              <zone h='25921' id='22' mode='checklist' name='Paises glovo (2)' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]' type-v2='filter' values='relevant' w='11429' x='88000' y='54607'>
+              <zone h='25921' id='22' mode='checklist' name='Paises rectang.' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]' type-v2='filter' values='relevant' w='11429' x='88000' y='47633'>
                 <zone-style>
                   <format attr='border-color' value='#000000' />
                   <format attr='border-style' value='none' />
@@ -3336,29 +3458,26 @@
             <format attr='margin' value='8' />
           </zone-style>
         </zone>
-        <zone h='32763' id='19' name='Hoja 10' show-title='false' w='25857' x='62500' y='4474' />
-        <zone h='48158' id='20' name='barras mensual y categorias' show-title='false' w='42214' x='19071' y='4211' />
-        <zone h='41974' id='3' name='Anual' show-title='false' w='14857' x='1929' y='1842' />
-        <zone h='40658' id='21' name='Paises glovo (2)' show-title='false' w='51500' x='35429' y='56842' />
-        <zone h='23026' id='23' name='media genero' show-title='false' w='12571' x='70286' y='31974' />
+        <zone h='32763' id='19' name='Barra Categorias' w='25857' x='62500' y='4474' />
+        <zone h='47500' id='20' name='barras mensual y categorias' show-title='false' w='42214' x='18286' y='4605' />
+        <zone h='41974' id='3' name='Anual barra' w='15786' x='1714' y='2632' />
+        <zone h='40658' id='21' name='Paises rectang.' show-title='false' w='51500' x='35429' y='56842' />
+        <zone h='19737' id='23' name='media genero' show-title='false' w='10429' x='68643' y='33026' />
         <zone forceUpdate='true' h='6579' id='28' type-v2='text' w='13143' x='5143' y='53158'>
           <formatted-text>
             <run bold='true' fontcolor='#f28e2b' fontsize='11' underline='true'>Solo 2017 año completo</run>
           </formatted-text>
         </zone>
-        <zone h='33289' id='29' name='% beneficio' show-title='false' w='29429' x='857' y='65921' />
-        <zone h='8421' id='30' name='media genero' pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='color' w='10000' x='65786' y='44474' />
+        <zone h='33158' id='29' name='% beneficio' show-title='false' w='29643' x='857' y='64342' />
+        <zone h='8421' id='30' name='media genero' pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='color' w='6429' x='80571' y='40658' />
       </zones>
       <devicelayouts>
-        <devicelayout name='Desktop'>
-          <size sizing-mode='automatic' />
-        </devicelayout>
-        <devicelayout auto-generated='true' name='Phone'>
-          <size maxheight='1950' minheight='1950' sizing-mode='vscroll' />
+        <devicelayout name='Phone'>
+          <size maxheight='2200' minheight='2200' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='32' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='97894' id='31' param='vert' type-v2='layout-flow' w='98858' x='571' y='1053'>
-                <zone h='19869' id='8' mode='checkdropdown' name='Anual' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]' type-v2='filter' w='11429' x='88000' y='1053'>
+            <zone h='100000' id='47' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='99272' id='46' param='vert' type-v2='layout-flow' w='95734' x='2133' y='364'>
+                <zone fixed-size='90' h='2773' id='8' mode='checkdropdown' name='Anual barra' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[yr:order_date:ok]' type-v2='filter' w='95734' x='2133' y='364'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3367,7 +3486,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone h='19869' id='10' mode='checkdropdown' name='Anual' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' type-v2='filter' w='11429' x='88000' y='20922'>
+                <zone h='2773' id='10' mode='checkdropdown' name='Anual barra' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' type-v2='filter' w='95734' x='2133' y='3137'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3376,7 +3495,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone h='13816' id='12' mode='checkdropdown' name='Anual' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='filter' w='11429' x='88000' y='40791'>
+                <zone h='2773' id='12' mode='checkdropdown' name='Anual barra' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='filter' w='95734' x='2133' y='5910'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3385,7 +3504,8 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='280' h='41974' id='3' is-fixed='true' name='Anual' show-title='false' w='14857' x='1929' y='1842'>
+                <zone fixed-size='280' h='13091' id='3' is-fixed='true' name='Anual barra' w='95734' x='2133' y='8683'>
+                  <layout-cache has-max-size-h='true' maxheight='352' minheight='352' type-h='scalable' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3394,7 +3514,8 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='280' h='48158' id='20' is-fixed='true' name='barras mensual y categorias' show-title='false' w='42214' x='19071' y='4211'>
+                <zone fixed-size='249' h='11682' id='19' is-fixed='true' name='Barra Categorias' w='95734' x='2133' y='21774'>
+                  <layout-cache type-h='fixed' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3403,7 +3524,8 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='249' h='32763' id='19' is-fixed='true' name='Hoja 10' show-title='false' w='25857' x='62500' y='4474'>
+                <zone fixed-size='280' h='13091' id='20' is-fixed='true' name='barras mensual y categorias' show-title='false' w='95734' x='2133' y='33456'>
+                  <layout-cache has-max-size-h='true' maxheight='285' minheight='285' type-h='scalable' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3412,7 +3534,8 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='175' h='23026' id='23' is-fixed='true' name='media genero' show-title='false' w='12571' x='70286' y='31974'>
+                <zone fixed-size='150' h='7182' id='23' is-fixed='true' name='media genero' show-title='false' w='95734' x='2133' y='46547'>
+                  <layout-cache type-h='cell' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3421,7 +3544,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone h='8421' id='30' name='media genero' pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='color' w='10000' x='65786' y='44474'>
+                <zone h='3273' id='30' name='media genero' pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type-v2='color' w='95734' x='2133' y='53729'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3430,7 +3553,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone forceUpdate='true' h='6579' id='28' type-v2='text' w='13143' x='5143' y='53158'>
+                <zone forceUpdate='true' h='1500' id='28' type-v2='text' w='95734' x='2133' y='57002'>
                   <formatted-text>
                     <run bold='true' fontcolor='#f28e2b' fontsize='11' underline='true'>Solo 2017 año completo</run>
                   </formatted-text>
@@ -3442,7 +3565,7 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone h='25921' id='22' mode='checkdropdown' name='Paises glovo (2)' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]' type-v2='filter' values='relevant' w='11429' x='88000' y='54607'>
+                <zone h='2773' id='22' mode='checkdropdown' name='Paises rectang.' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]' type-v2='filter' values='relevant' w='95734' x='2133' y='58502'>
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3451,7 +3574,8 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='280' h='40658' id='21' is-fixed='true' name='Paises glovo (2)' show-title='false' w='51500' x='35429' y='56842'>
+                <zone fixed-size='280' h='13091' id='21' is-fixed='true' name='Paises rectang.' show-title='false' w='95734' x='2133' y='61275'>
+                  <layout-cache type-h='cell' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3460,7 +3584,8 @@
                     <format attr='padding' value='0' />
                   </zone-style>
                 </zone>
-                <zone fixed-size='253' h='33289' id='29' is-fixed='true' name='% beneficio' show-title='false' w='29429' x='857' y='65921'>
+                <zone fixed-size='253' h='11864' id='29' is-fixed='true' name='% beneficio' show-title='false' w='95734' x='2133' y='74366'>
+                  <layout-cache type-h='fixed' type-w='fixed' />
                   <zone-style>
                     <format attr='border-color' value='#000000' />
                     <format attr='border-style' value='none' />
@@ -3502,8 +3627,8 @@
         <devicelayout auto-generated='true' name='Phone'>
           <size maxheight='700' minheight='700' sizing-mode='vscroll' />
           <zones>
-            <zone h='100000' id='12' type-v2='layout-basic' w='100000' x='0' y='0'>
-              <zone h='98140' id='11' param='vert' type-v2='layout-flow' w='98828' x='586' y='930' />
+            <zone h='100000' id='26' type-v2='layout-basic' w='100000' x='0' y='0'>
+              <zone h='84000' id='25' param='vert' type-v2='layout-flow' w='84000' x='8000' y='8000' />
               <zone-style>
                 <format attr='border-color' value='#000000' />
                 <format attr='border-style' value='none' />
@@ -3543,8 +3668,8 @@
       <simple-id uuid='{4349E981-7DF8-4146-81DD-50C5A7F5F9AD}' />
     </dashboard>
   </dashboards>
-  <windows source-height='37'>
-    <window class='worksheet' name='Anual'>
+  <windows saved-dpi-scale-factor='1.25' source-height='37'>
+    <window class='worksheet' name='Anual barra'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -3573,7 +3698,7 @@
       </cards>
       <simple-id uuid='{E8DC5923-C6E5-4C01-A4BE-10DB99DA45F7}' />
     </window>
-    <window class='worksheet' name='Anual (2)'>
+    <window class='worksheet' name='Anual tabla'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -3601,7 +3726,7 @@
       </cards>
       <simple-id uuid='{F04E7207-14F2-48DF-9544-EE5A3F97A6AD}' />
     </window>
-    <window class='worksheet' maximized='true' name='% beneficio'>
+    <window class='worksheet' name='% beneficio'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -3654,7 +3779,7 @@
       </cards>
       <simple-id uuid='{930B9868-0A69-45EA-9310-2CF052F31F1B}' />
     </window>
-    <window class='worksheet' name='Hoja 10'>
+    <window class='worksheet' name='Barra Categorias'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -3721,7 +3846,7 @@
           </strip>
         </edge>
         <edge name='right'>
-          <strip size='174'>
+          <strip size='173'>
             <card pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:category:nk]' type='color' />
           </strip>
         </edge>
@@ -3752,7 +3877,7 @@
       </cards>
       <simple-id uuid='{F061A93B-2F04-480D-BF68-220C28D5E059}' />
     </window>
-    <window class='worksheet' name='Paises glovo'>
+    <window class='worksheet' name='Paises circular'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -3773,17 +3898,17 @@
           </strip>
         </edge>
         <edge name='right'>
-          <strip size='174'>
+          <strip size='173'>
             <card pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[ctd:totalprice_euros:qk]' type='color' />
           </strip>
         </edge>
       </cards>
       <simple-id uuid='{932A0F7B-63E7-4307-A7A4-5C7ED69E27AF}' />
     </window>
-    <window class='worksheet' name='Paises glovo (2)'>
+    <window class='worksheet' name='Paises rectang.'>
       <cards>
         <edge name='left'>
-          <strip size='174'>
+          <strip size='173'>
             <card type='pages' />
             <card type='filters' />
             <card type='marks' />
@@ -3801,7 +3926,7 @@
           </strip>
         </edge>
         <edge name='right'>
-          <strip size='174'>
+          <strip size='173'>
             <card param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:country:nk]' type='filter' />
           </strip>
         </edge>
@@ -3832,7 +3957,7 @@
           </strip>
         </edge>
         <edge name='right'>
-          <strip size='174'>
+          <strip size='173'>
             <card pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' type='color' />
           </strip>
         </edge>
@@ -3860,7 +3985,7 @@
           </strip>
         </edge>
         <edge name='right'>
-          <strip size='174'>
+          <strip size='173'>
             <card param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type='filter' />
             <card pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[none:gender:nk]' type='color' />
             <card pane-specification-id='0' param='[federated.1klt0wa1edcpt11fvxl5x1ntbdqw].[sum:totalprice_euros:qk]' type='size' />
@@ -3897,17 +4022,19 @@
       </cards>
       <simple-id uuid='{194443F8-2B71-40D6-8515-8ED25BC59126}' />
     </window>
-    <window class='dashboard' name='Dashboard 1'>
+    <window class='dashboard' maximized='true' name='Dashboard 1'>
       <viewpoints>
-        <viewpoint name='% beneficio' />
-        <viewpoint name='Anual'>
+        <viewpoint name='% beneficio'>
+          <zoom type='fit-width' />
+        </viewpoint>
+        <viewpoint name='Anual barra'>
           <zoom type='entire-view' />
         </viewpoint>
-        <viewpoint name='Hoja 10'>
+        <viewpoint name='Barra Categorias'>
           <zoom type='fit-width' />
         </viewpoint>
-        <viewpoint name='Paises glovo (2)'>
-          <zoom type='fit-width' />
+        <viewpoint name='Paises rectang.'>
+          <zoom type='entire-view' />
         </viewpoint>
         <viewpoint name='barras mensual y categorias'>
           <zoom type='entire-view' />
@@ -3916,11 +4043,10 @@
           <zoom type='entire-view' />
         </viewpoint>
       </viewpoints>
-      <active id='-1' />
+      <active id='3' />
       <device-preview visible='true'>
         <device name='Medium Desktop Monitor' type='Desktop' />
       </device-preview>
-      <grid grid-overlay-mode='on' />
       <simple-id uuid='{A54F692B-6A02-496A-A647-1EC301984381}' />
     </window>
     <window class='dashboard' name='Historia 1'>
@@ -3930,7 +4056,7 @@
     </window>
     <window class='dashboard' name='Dashboard 2'>
       <viewpoints />
-      <active id='6' />
+      <active id='-1' />
       <device-preview selected='Desktop' visible='true'>
         <device name='iPad Pro 12.9-inch' type='Desktop' />
       </device-preview>
