@@ -1,7 +1,6 @@
 # 🛍️ Sales Cycle: Análisis de Ventas con ETL + MySQL + Modelo Estrella EER + Tableau
 
 **Autora:** María Ballesteros  
-**Fecha:** 2025-03-24
 
 Este proyecto realiza un análisis del ciclo de ventas de una empresa de artículos de ciclismo, a partir de un repositorio público. El objetivo es construir un pipeline ETL que prepare los datos para análisis profundo, tanto en SQL como en herramientas de visualización como Tableau.
 
