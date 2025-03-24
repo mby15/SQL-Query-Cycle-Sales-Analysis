@@ -85,6 +85,6 @@ Como fase final del proyecto, los datos fueron cargados en **Tableau** desde los
 
 📸 Vista previa:
 
-![Dashboard Tableau](dashboard_tableau.png)
+[![Tableau Dashboard](Visualization/tableau.png)](Visualization/tableau.png)
 
 ---
